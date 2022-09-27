@@ -1,0 +1,15 @@
+.header__wrapper {
+  display: flex;
+}
+
+@media screen and (max-width: 619px) {
+  .header__wrapper {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    padding: 40px 0;
+    margin-bottom: 83px;
+    align-items: center;
+    border-bottom: rgba(84, 84, 84, 0.7) solid 1px;
+  }
+}

@@ -1,0 +1,29 @@
+.header_menu-open  .header__container {
+  flex-direction: column-reverse;
+  margin: 0;
+}
+
+.header_menu-open  .header__wrapper {
+  display: flex;
+}
+
+.header_menu-open .header__menu {
+  position: absolute;
+  left: 85%;
+  top: 175px;
+  width: 20px;
+  height: 20px;
+  border-style: none;
+  background: none;
+  background-image: url('../../../images/close-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity .4s ease-in-out;
+  background-size: contain;
+}
+
+.header_menu-open  .header__logo {
+  position: absolute;
+  left: 10%;
+  top: 170px;
+}

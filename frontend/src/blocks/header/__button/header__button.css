@@ -1,0 +1,22 @@
+.header__button {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  color:rgba(255, 255, 255, 1);
+  transition: opacity .4s ease-in-out;
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+
+.header__button:hover {
+  cursor: pointer;
+  opacity: .5;
+}
+
+@media screen and (max-width: 767px) {
+  .header__button {
+    font-size: 14px;
+  }
+}

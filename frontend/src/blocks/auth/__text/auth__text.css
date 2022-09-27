@@ -1,0 +1,9 @@
+.auth__text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  text-decoration: none;
+}

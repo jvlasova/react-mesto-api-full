@@ -1,0 +1,21 @@
+.auth__input {
+  width: 100%;
+  margin: 12px auto 0;
+  border-style: none;
+  background: rgba(0, 0, 0, 1);;
+  border-bottom: rgba(255, 255, 255, 1) solid 1px;
+  border-radius: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 1);
+  padding: 0 0 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.auth__input:first-of-type {
+  margin-top: 0;
+} 

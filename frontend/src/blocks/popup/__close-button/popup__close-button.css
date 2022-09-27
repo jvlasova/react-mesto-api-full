@@ -1,0 +1,28 @@
+.popup__close-button {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 32px;
+  height: 32px;
+  border-style: none;
+  background: none;
+  background-image: url('../../../images/close-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity .4s ease-in-out;
+  margin: 0;
+  padding: 0;
+}
+
+.popup__close-button:hover {
+  cursor: pointer;
+  opacity: .6;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__close-button {
+    transform: scale(0.63);
+    top: -42px;
+    right: -7px;
+  }
+}

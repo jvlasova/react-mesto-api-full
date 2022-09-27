@@ -1,0 +1,14 @@
+.auth__container {
+  display: flex;
+  margin: 60px auto 0;
+  color: rgba(255, 255, 255, 1);
+  max-width: 358px;
+  padding: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .auth__container {
+    max-width: 260px;
+    margin: 40px auto 0;
+  }
+}
