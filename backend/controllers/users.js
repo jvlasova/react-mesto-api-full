@@ -86,7 +86,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'SECRET',
+        'JWT_SECRET',
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
@@ -97,16 +97,6 @@ const login = (req, res, next) => {
         .send({ token });
     })
     .catch(next);
-};
-
-const signOut = (req, res, next) => {
-  res.clearCookie('jwt', {
-    sameSite: 'none',
-    secure: true,
-  })
-    .send({ message: 'cookies удалены' })
-    .end();
-  next();
 };
 
 const updateUserInfo = (req, res, next) => {
@@ -172,7 +162,6 @@ module.exports = {
   getMe,
   createUser,
   login,
-  signOut,
   getUsersById,
   updateUserInfo,
   updateAvatar,

@@ -1,31 +1,37 @@
-import React from "react";
+import { useEffect } from "react";
 
-const Popup = ({ isOpen, name, image_full, onClose, children }) => {
-  React.useEffect(() => {
+const Popup = ({ isOpen, name, onClose, children }) => {
+  useEffect(() => {
     if (!isOpen) return;
-    const handleEscapeClose = (e) => {
+    const closeByEscape = (e) => {
       if (e.key === "Escape") {
         onClose();
       }
     };
-    document.addEventListener("keydown", handleEscapeClose);
-    return () => document.removeEventListener("keydown", handleEscapeClose);
+    document.addEventListener("keydown", closeByEscape);
+    return () => document.removeEventListener("keydown", closeByEscape);
   }, [isOpen, onClose]);
 
-  const handleOverlayClose = (e) => {
-    if (e.target === e.currentTarget && isOpen) {
+  const onCloseOverlay = (e) => {
+    if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
   return (
     <div
-      className={`popup popup_type_${name} ${image_full || ""} ${
-        isOpen && "popup_opened"
-      }`}
-      onClick={handleOverlayClose}
+      className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}
+      onClick={onCloseOverlay}
     >
-      {children}
+      <div className="popup__container">
+        <button
+          type="button"
+          className="popup__close-button"
+          aria-label="Закрыть"
+          onClick={onClose}
+        ></button>
+        {children}
+      </div>
     </div>
   );
 };

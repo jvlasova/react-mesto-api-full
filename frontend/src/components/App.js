@@ -6,7 +6,6 @@ import Main from "./Main";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import DeletePlacePopup from "./DeletePlacePopup";
 import ImagePopup from "./ImagePopup";
 import InfoTooltip from "./InfoTooltip";
 import Register from "./Register";
@@ -14,7 +13,7 @@ import Login from "./Login";
 import Api from "../utils/Api";
 import * as AuthApi from "../utils/AuthApi";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -30,15 +29,9 @@ function App() {
     name: "",
     link: "",
   });
-  const [delectedCard, setdelectedCard] = React.useState({
-    name: "",
-    link: "",
-  });
-  const [isDeletePlacePopupOpen, setIsDeletePlacePopupOpen] =
-    React.useState(false);
   const [selectedCardOpen, setSelectedCardOpen] = React.useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [isStatusRegister, setIsStatusRegister] = React.useState(false);
+  const [isInfoTooltip, setIsInfoTooltip] = React.useState(false);
+  //const [isStatusRegister, setIsStatusRegister] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const history = useHistory();
@@ -62,18 +55,17 @@ function App() {
     }
   }, [loggedIn]);
 
+  function handleLoadingButton() {
+    isLoading ? setIsLoading(true) : setIsLoading(false);
+  }
+
+  function handleInfoTooltipOpen(outcome) {
+    setIsInfoTooltip({ ...isInfoTooltip, isOpen: true, ok: outcome });
+  }
+
   function handleCardSelected(card) {
     setSelectedCard(card);
     setSelectedCardOpen(true);
-  }
-
-  function handleDeletePlaceOpen(card) {
-    setdelectedCard(card);
-    setIsDeletePlacePopupOpen(true);
-  }
-
-  function handleInfoTooltipOpen() {
-    setIsInfoTooltipOpen(true);
   }
 
   function handleUpdateUserOpen() {
@@ -92,9 +84,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setIsDeletePlacePopupOpen(false);
-    setIsInfoTooltipOpen(false);
-    setSelectedCardOpen(false);
+    setIsInfoTooltip(false);
+    setSelectedCard({ name: "", link: "" });
   }
 
   function handleChecktoken() {
@@ -118,7 +109,7 @@ function App() {
 
   React.useEffect(() => {
     if (loggedIn) {
-      history.push("/react-mesto-auth");
+      history.push("/");
     }
   }, [loggedIn, history]);
 
@@ -129,12 +120,12 @@ function App() {
           localStorage.setItem("jwt", res.token);
           setEmail(values.login);
           setLoggedIn(true);
-          history.push("/react-mesto-auth");
+          history.push("/");
+          handleInfoTooltipOpen(true);
         }
       })
       .catch((err) => {
-        setIsStatusRegister(false);
-        handleInfoTooltipOpen();
+        handleInfoTooltipOpen(false);
         console.log(err);
       });
   }
@@ -143,21 +134,19 @@ function App() {
     AuthApi.register({ values })
       .then((res) => {
         if (res) {
-          setIsStatusRegister(true);
-          handleInfoTooltipOpen();
-          history.push("/react-mesto-auth");
+          handleInfoTooltipOpen(true);
+          history.push("/");
         }
       })
       .catch((err) => {
-        setIsStatusRegister(false);
-        handleInfoTooltipOpen();
+        handleInfoTooltipOpen(false);
         console.log(err);
       });
   }
 
   function handleSignOut() {
     localStorage.removeItem("jwt");
-    history.push("/react-mesto-auth/sign-in");
+    history.push("/sign-in");
   }
 
   function handleCardLike(card) {
@@ -175,8 +164,7 @@ function App() {
       });
   }
 
-  function handlePlaceDelete(card) {
-    setIsLoading(true);
+  function handleCardDelete(card) {
     Api.deleteCard(card._id)
       .then(() => {
         setCurrentCards((currentCard) => {
@@ -188,9 +176,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }
 
@@ -245,7 +230,7 @@ function App() {
         <div className="page">
           <ProtectedRoute
             exact
-            path="/react-mesto-auth"
+            path="/"
             loggedIn={loggedIn}
             component={Header}
             email={email}
@@ -254,27 +239,30 @@ function App() {
           <Switch>
             <ProtectedRoute
               exact
-              path="/react-mesto-auth"
+              path="/"
               loggedIn={loggedIn}
               component={Main}
               cards={currentCards}
               onEditProfile={handleUpdateUserOpen}
               onEditAvatar={handleUpdateAvatarOpen}
               onAddPlace={handleAddPlaceSubmitOpen}
-              onCardDelete={handleDeletePlaceOpen}
               onCardClick={handleCardSelected}
+              onCardDelete={handleCardDelete}
               onCardLike={handleCardLike}
             />
-            <Route path="/react-mesto-auth/sign-in">
+            <Route path="/sign-in">
               <Login onLogin={handleLogin} />
             </Route>
-            <Route path="/react-mesto-auth/sign-up">
+            <Route path="/sign-up">
               <Register onRegister={handleRegister} />
+            </Route>
+            <Route>
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
             </Route>
           </Switch>
           <ProtectedRoute
             exact
-            path="/react-mesto-auth"
+            path="/"
             loggedIn={loggedIn}
             component={Footer}
           />
@@ -282,38 +270,29 @@ function App() {
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            isLoading={isLoading}
+            handleLoadingButton={handleLoadingButton}
+            buttonText={isLoading ? "Сохранение..." : "Сохранить"}
           />
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
-            isLoading={isLoading}
+            handleLoadingButton={handleLoadingButton}
+            buttonText={isLoading ? "Сохранение..." : "Сохранить"}
           />
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onUpdatePlace={handleAddPlaceSubmit}
-            isLoading={isLoading}
-          />
-          <DeletePlacePopup
-            card={delectedCard}
-            isOpen={isDeletePlacePopupOpen}
-            onClose={closeAllPopups}
-            onDelete={handlePlaceDelete}
-            isLoading={isLoading}
+            handleLoadingButton={handleLoadingButton}
+            buttonText={isLoading ? "Сохранение..." : "Создать"}
           />
           <ImagePopup
             card={selectedCard}
             isOpen={selectedCardOpen}
             onClose={closeAllPopups}
           />
-          <InfoTooltip
-            isOpen={isInfoTooltipOpen}
-            onClose={closeAllPopups}
-            handleInfoTooltipOpen={handleInfoTooltipOpen}
-            isStatusRegister={isStatusRegister}
-          />
+          <InfoTooltip outcome={isInfoTooltip} onClose={closeAllPopups} />
         </div>
       </div>
     </CurrentUserContext.Provider>

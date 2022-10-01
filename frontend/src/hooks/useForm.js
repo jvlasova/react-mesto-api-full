@@ -1,27 +1,11 @@
-import React, { useCallback } from "react";
+import React from 'react';
 
-export function useFormWithValidation() {
-  const [values, setValues] = React.useState({});
-  const [errors, setErrors] = React.useState({});
-  const [isValid, setIsValid] = React.useState(false);
+export function useForm(inputValues) {
+  const [values, setValues] = React.useState(inputValues);
 
-  const handleChange = (e) => {
-    const input = e.target;
-    const value = input.value;
-    const name = input.name;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: input.validationMessage });
-    setIsValid(input.closest("form").checkValidity());
+  const handleChange = (event) => {
+    const {value, name} = event.target;
+    setValues({...values, [name]: value});
   };
-
-  const resetFrom = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
-      setValues(newValues);
-      setErrors(newErrors);
-      setIsValid(newIsValid);
-    },
-    [setValues, setErrors, setIsValid]
-  );
-
-  return { values, handleChange, resetFrom, errors, isValid };
+  return {values, handleChange, setValues};
 }

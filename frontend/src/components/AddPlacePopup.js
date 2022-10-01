@@ -1,32 +1,38 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { useFormWithValidation } from "../hooks/useForm";
+import { useForm } from "../hooks/useForm";
 
-function AddPlacePopup({ isOpen, onClose, onUpdatePlace, isLoading }) {
-  const currentCard = React.useContext({});
-  const { values, handleChange, resetFrom, errors, isValid } =
-    useFormWithValidation();
+function AddPlacePopup({
+  isOpen,
+  onClose,
+  onCloseOverlay,
+  onUpdatePlace,
+  buttonText,
+}) {
+  const { values, handleChange, setValues } = useForm({});
 
   React.useEffect(() => {
-    if (!currentCard) {
-      resetFrom(currentCard, {}, true);
-    }
-  }, [currentCard, isOpen, resetFrom]);
+    setValues({});
+  }, [isOpen, setValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onUpdatePlace(values);
+
+    onUpdatePlace({
+      name: values.name,
+      link: values.link,
+    });
   }
 
   return (
     <PopupWithForm
       name="add-card"
       title="Новое место"
+      buttonText={buttonText}
       isOpen={isOpen}
       onClose={onClose}
+      onCloseOverlay={onCloseOverlay}
       onSubmit={handleSubmit}
-      isLoading={isLoading ? "Сохранение..." : "Создать"}
-      isDisabled={!isValid || isLoading}
     >
       <input
         type="text"
@@ -40,7 +46,7 @@ function AddPlacePopup({ isOpen, onClose, onUpdatePlace, isLoading }) {
         maxLength="30"
         required
       />
-      <span className="title-error popup__text-error">{errors.name || ""}</span>
+      <span className="title-error popup__text-error"></span>
       <input
         type="url"
         id="link"
@@ -51,7 +57,7 @@ function AddPlacePopup({ isOpen, onClose, onUpdatePlace, isLoading }) {
         value={values.link || ""}
         required
       />
-      <span className="link-error popup__text-error">{errors.link || ""}</span>
+      <span className="link-error popup__text-error"></span>
     </PopupWithForm>
   );
 }

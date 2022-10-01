@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.jvlasova.mesto.nomorepartiesxyz.ru';
+export const BASE_URL = 'https://jvlasova.mesto.nomorepartiesxyz.ru';
 
 const headers = {
   'Accept': 'application/json',
@@ -16,7 +16,6 @@ export const register = ({ values }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers,
-    credentials: 'include',
     body: JSON.stringify({ 
       'email': values.login,
       'password': values.password
@@ -29,7 +28,6 @@ export const authorize = ({ values }) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers,
-    credentials: 'include',
     body: JSON.stringify({ 
       email: values.login,
       password: values.password
@@ -44,21 +42,7 @@ export const checkToken = (token) => {
       method: 'GET',
       ...headers,
       'Authorization': `Bearer ${token}`,
-    },
-    credentials: 'include',
+    }
   })
   .then((res => handleResponse(res)));
-}
-
-export const signOut = () => {
-  return fetch(`${BASE_URL}/signout`, {
-      method: 'POST',
-      headers: {
-          "Content-Type": "application/json"
-      },
-      
-      credentials: 'include'
-  })
-      .then((res => res))
-      .catch(err => console.log(err))
 }

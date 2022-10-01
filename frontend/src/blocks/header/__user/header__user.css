@@ -1,0 +1,10 @@
+.header__user {
+  display: flex;
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .header__user {
+    margin-right: 19px;
+  }
+}

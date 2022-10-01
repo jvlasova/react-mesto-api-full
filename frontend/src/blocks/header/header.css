@@ -1,12 +1,16 @@
 .header {
   font-family: Inter, Arial, sans-serif;
   max-width: 880px;
+  min-height: 119px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
-  border-bottom: rgba(84, 84, 84, 0.7) solid 1px;
+  border-bottom: rgba(84, 84, 84, .7) solid 1px;
 }
 
 @media screen and (max-width: 1023px) {
   .header {
-    max-width: 730px;
+    max-width: 720px;
   }
 }
