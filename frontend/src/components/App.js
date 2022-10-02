@@ -39,22 +39,22 @@ function App() {
     if (!loggedIn) {
       return;
     }
-      Api.getUserInfo()
-        .then((data) => {
-          setCurrentUser(data);
-          setEmail(data.email);
-          setLoggedIn(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      Api.getCardList()
-        .then((data) => {
-          setCurrentCards(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    Api.getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+        setEmail(data.email);
+        setLoggedIn(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    Api.getCardList()
+      .then((data) => {
+        setCurrentCards(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [loggedIn]);
 
   function handleLoadingButton() {
@@ -90,25 +90,6 @@ function App() {
     setSelectedCard({ name: "", link: "" });
   }
 
-  // function handleChecktoken() {
-  //   const jwt = localStorage.getItem("jwt");
-  //   if (!jwt) {
-  //     return;
-  //   }
-  //   AuthApi.checkToken()
-  //     .then((values) => {
-  //       setEmail(values.data.email);
-  //       setLoggedIn(true);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  // React.useEffect(() => {
-  //   handleChecktoken();
-  // }, []);
-
   React.useEffect(() => {
     if (loggedIn) {
       history.push("/");
@@ -119,9 +100,9 @@ function App() {
     AuthApi.authorize({ values })
       .then((res) => {
         if (res) {
-          //window.localStorage.setItem("loggedIn", true);
           setEmail(values.login);
           setLoggedIn(true);
+          window.localStorage.setItem("loggedIn", true);
           history.push("/");
           handleInfoTooltipOpen(true);
         }
@@ -147,13 +128,12 @@ function App() {
   }
 
   function handleSignOut() {
-    //window.localStorage.setItem("loggedIn", false);
     history.push("/sign-in");
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like._id === currentUser._id);
-    Api.changeLikeCardStatus(card._id, !isLiked ? "PUT" : "DELETE")
+    const isLiked = card.likes.some(i => i === currentUser._id);
+    Api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCurrentCards((currentCards) => {
           return currentCards.map((c) => {

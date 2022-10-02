@@ -71,9 +71,9 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  changeLikeCardStatus(id, method) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: method,
+  changeLikeCardStatus(cardId, like) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: like ? 'DELETE' : 'PUT',
       headers : {
         "Content-Type": "application/json"
       },
@@ -81,8 +81,8 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  deleteCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers : {
         "Content-Type": "application/json"
@@ -93,7 +93,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru',
+  baseUrl: "http://localhost:3000",
 })
 
 export default api;
