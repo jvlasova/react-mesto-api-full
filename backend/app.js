@@ -80,7 +80,7 @@ app.post(
   createUser,
 );
 
-// app.use(auth);
+app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 

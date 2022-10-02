@@ -36,10 +36,14 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (loggedIn) {
+    if (!loggedIn) {
+      return;
+    }
       Api.getUserInfo()
         .then((data) => {
           setCurrentUser(data);
+          setEmail(data.email);
+          setLoggedIn(true);
         })
         .catch((error) => {
           console.log(error);
@@ -51,7 +55,6 @@ function App() {
         .catch((error) => {
           console.log(error);
         });
-    }
   }, [loggedIn]);
 
   function handleLoadingButton() {
@@ -116,7 +119,7 @@ function App() {
     AuthApi.authorize({ values })
       .then((res) => {
         if (res) {
-          //localStorage.setItem("jwt", res.token);
+          //window.localStorage.setItem("loggedIn", true);
           setEmail(values.login);
           setLoggedIn(true);
           history.push("/");
@@ -144,7 +147,7 @@ function App() {
   }
 
   function handleSignOut() {
-    //localStorage.removeItem("jwt");
+    //window.localStorage.setItem("loggedIn", false);
     history.push("/sign-in");
   }
 

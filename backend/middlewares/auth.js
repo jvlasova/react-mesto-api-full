@@ -1,20 +1,20 @@
-// const jwt = require('jsonwebtoken');
-// const AuthError = require('../errors/auth.error');
+const jwt = require('jsonwebtoken');
+const AuthError = require('../errors/auth.error');
 
-// const auth = (req, res, next) => {
-//   const token = req.cookies.jwt;
+const auth = (req, res, next) => {
+  const token = req.cookies.jwt;
 
-//   let payload;
+  let payload;
 
-//   try {
-//     payload = jwt.verify(token, 'JWT_SECRET');
-//   } catch (e) {
-//     const err = new AuthError('Необходима авторизация');
-//     next(err);
-//   }
+  try {
+    payload = jwt.verify(token, 'JWT_SECRET');
+  } catch (e) {
+    const err = new AuthError('Необходима авторизация');
+    next(err);
+  }
 
-//   req.user = payload;
-//   next();
-// };
+  req.user = payload;
+  next();
+};
 
-// module.exports = auth;
+module.exports = auth;
