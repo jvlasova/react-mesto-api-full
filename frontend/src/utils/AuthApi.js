@@ -16,6 +16,7 @@ export const register = ({ values }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers,
+    credentials: 'include',
     body: JSON.stringify({ 
       'email': values.login,
       'password': values.password
@@ -28,6 +29,7 @@ export const authorize = ({ values }) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers,
+    credentials: 'include',
     body: JSON.stringify({ 
       email: values.login,
       password: values.password
@@ -36,13 +38,10 @@ export const authorize = ({ values }) => {
   .then((res => handleResponse(res)));
 }
 
-export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    headers: {
-      method: 'GET',
-      ...headers,
-      'Authorization': `Bearer ${token}`,
-    }
-  })
-  .then((res => handleResponse(res)));
-}
+// export const checkToken = () => {
+//   return fetch(`${BASE_URL}/users/me`, {
+//     headers,
+//     credentials: 'include',
+//   })
+//   .then((res => handleResponse(res)));
+// }

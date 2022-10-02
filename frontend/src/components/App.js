@@ -31,7 +31,6 @@ function App() {
   });
   const [selectedCardOpen, setSelectedCardOpen] = React.useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = React.useState(false);
-  //const [isStatusRegister, setIsStatusRegister] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const history = useHistory();
@@ -88,24 +87,24 @@ function App() {
     setSelectedCard({ name: "", link: "" });
   }
 
-  function handleChecktoken() {
-    const jwt = localStorage.getItem("jwt");
-    if (!jwt) {
-      return;
-    }
-    AuthApi.checkToken(jwt)
-      .then((values) => {
-        setEmail(values.data.email);
-        setLoggedIn(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  // function handleChecktoken() {
+  //   const jwt = localStorage.getItem("jwt");
+  //   if (!jwt) {
+  //     return;
+  //   }
+  //   AuthApi.checkToken()
+  //     .then((values) => {
+  //       setEmail(values.data.email);
+  //       setLoggedIn(true);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
-  React.useEffect(() => {
-    handleChecktoken();
-  }, []);
+  // React.useEffect(() => {
+  //   handleChecktoken();
+  // }, []);
 
   React.useEffect(() => {
     if (loggedIn) {
@@ -116,8 +115,8 @@ function App() {
   function handleLogin({ values }) {
     AuthApi.authorize({ values })
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
+        if (res) {
+          //localStorage.setItem("jwt", res.token);
           setEmail(values.login);
           setLoggedIn(true);
           history.push("/");
@@ -145,7 +144,7 @@ function App() {
   }
 
   function handleSignOut() {
-    localStorage.removeItem("jwt");
+    //localStorage.removeItem("jwt");
     history.push("/sign-in");
   }
 
