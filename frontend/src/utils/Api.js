@@ -72,6 +72,6 @@ class Api {
   }
 }
 
-const api = new Api("https://jvlasova.mesto.nomorepartiesxyz.ru");
+const api = new Api("https://api.jvlasova.mesto.nomorepartiesxyz.ru");
 
 export default api;
