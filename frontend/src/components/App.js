@@ -102,7 +102,6 @@ function App() {
         if (res) {
           setEmail(values.login);
           setLoggedIn(true);
-          window.localStorage.setItem("loggedIn", true);
           history.push("/");
           handleInfoTooltipOpen(true);
         }

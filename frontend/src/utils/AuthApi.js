@@ -37,11 +37,3 @@ export const authorize = ({ values }) => {
   })
   .then((res => handleResponse(res)));
 }
-
-// export const checkToken = () => {
-//   return fetch(`${BASE_URL}/users/me`, {
-//     headers,
-//     credentials: 'include',
-//   })
-//   .then((res => handleResponse(res)));
-// }

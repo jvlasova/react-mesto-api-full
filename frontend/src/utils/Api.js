@@ -1,6 +1,6 @@
 class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl;
+  constructor(baseUrl) {
+    this._baseUrl = baseUrl;
   }
 
   _handleResponse(res) {
@@ -71,8 +71,8 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  changeLikeCardStatus(cardId, like) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  changeLikeCardStatus(id, like) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: like ? 'DELETE' : 'PUT',
       headers : {
         "Content-Type": "application/json"
@@ -81,8 +81,8 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers : {
         "Content-Type": "application/json"
