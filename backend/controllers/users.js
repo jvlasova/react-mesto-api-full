@@ -96,9 +96,19 @@ const login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       })
-        .send({ token });
+        .send({ token })
+        .end();
     })
     .catch(next);
+};
+
+const signOut = (req, res, next) => {
+  res.clearCookie('jwt', {
+    sameSite: true,
+  })
+    .send({ message: 'Cookies удалены' })
+    .end();
+  next();
 };
 
 const updateUserInfo = (req, res, next) => {
@@ -164,6 +174,7 @@ module.exports = {
   getMe,
   createUser,
   login,
+  signOut,
   getUsersById,
   updateUserInfo,
   updateAvatar,

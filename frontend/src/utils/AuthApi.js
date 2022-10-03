@@ -37,3 +37,12 @@ export const authorize = ({ values }) => {
   })
   .then((res => handleResponse(res)));
 }
+
+export const signOut = () => {
+  return fetch(`${BASE_URL}/signout`, {
+      method: 'POST',
+      headers,
+      credentials: 'include'
+  })
+  .then((res => handleResponse(res)));
+}

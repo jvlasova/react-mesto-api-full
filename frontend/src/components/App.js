@@ -38,9 +38,9 @@ function App() {
   React.useEffect(() => {
     if (loggedIn) {
       Api.getUserInfo()
-        .then((data) => {
-          setCurrentUser(data);
-          setEmail(data.email);
+        .then((values) => {
+          setCurrentUser(values.data);
+          setEmail(values.data.email);
           setLoggedIn(true);
         })
         .catch((error) => {
@@ -98,11 +98,10 @@ function App() {
   function handleLogin({ values }) {
     AuthApi.authorize({ values })
       .then((res) => {
-        if (res) {
+        if (res.token) {
           setEmail(values.login);
           setLoggedIn(true);
           history.push("/");
-          handleInfoTooltipOpen(true);
         }
       })
       .catch((err) => {
@@ -130,8 +129,8 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i === currentUser._id);
-    Api.changeLikeCardStatus(card._id, isLiked)
+    const isLiked = card.likes.some((like) => like._id === currentUser._id);
+    Api.changeLikeCardStatus(card._id, !isLiked ? "PUT" : "DELETE")
       .then((newCard) => {
         setCurrentCards((currentCards) => {
           return currentCards.map((c) => {
