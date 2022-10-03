@@ -1,6 +1,6 @@
 class Api {
-  constructor(baseUrl) {
-    this._baseUrl = baseUrl;
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
   }
 
   _handleResponse(res) {

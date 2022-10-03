@@ -36,25 +36,24 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (!loggedIn) {
-      return;
+    if (loggedIn) {
+      Api.getUserInfo()
+        .then((data) => {
+          setCurrentUser(data);
+          setEmail(data.email);
+          setLoggedIn(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      Api.getCardList()
+        .then((data) => {
+          setCurrentCards(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    Api.getUserInfo()
-      .then((data) => {
-        setCurrentUser(data);
-        setEmail(data.email);
-        setLoggedIn(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    Api.getCardList()
-      .then((data) => {
-        setCurrentCards(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }, [loggedIn]);
 
   function handleLoadingButton() {
