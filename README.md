@@ -3,6 +3,6 @@
   
 Cсылка на сайт, размещенный на Яндекс.Облаке: https://jvlasova.mesto.nomorepartiesxyz.ru
 
-IP 130.193.55.20
+IP 84.201.177.115
 Frontend https://jvlasova.mesto.nomorepartiesxyz.ru
 Backend https://api.jvlasova.mesto.nomorepartiesxyz.ru
