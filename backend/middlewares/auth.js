@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'SECRET');
+    payload = jwt.verify(token, 'JWT_SECRET');
   } catch (e) {
     const err = new AuthError('Необходима авторизация');
     next(err);
