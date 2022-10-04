@@ -5,8 +5,6 @@ const BadReqError = require('../errors/bad_req_error');
 const NotFoundError = require('../errors/not_found_error');
 const EmailError = require('../errors/email_error');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
@@ -88,7 +86,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'secret',
+        'SECRET',
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
@@ -99,16 +97,6 @@ const login = (req, res, next) => {
         .send({ token });
     })
     .catch(next);
-};
-
-const signOut = (req, res, next) => {
-  res.clearCookie('jwt', {
-    sameSite: 'none',
-    secure: true,
-  })
-    .send({ message: 'Cookies удалены' })
-    .end();
-  next();
 };
 
 const updateUserInfo = (req, res, next) => {
@@ -174,7 +162,6 @@ module.exports = {
   getMe,
   createUser,
   login,
-  signOut,
   getUsersById,
   updateUserInfo,
   updateAvatar,

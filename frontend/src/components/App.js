@@ -89,6 +89,25 @@ function App() {
     setSelectedCard({ name: "", link: "" });
   }
 
+  // function handleChecktoken() {
+  //   const jwt = localStorage.getItem("jwt");
+  //   if (!jwt) {
+  //     return;
+  //   }
+  //   AuthApi.checkToken(jwt)
+  //     .then((values) => {
+  //       setEmail(values.data.email);
+  //       setLoggedIn(true);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
+  // React.useEffect(() => {
+  //   handleChecktoken();
+  // }, []);
+
   React.useEffect(() => {
     if (loggedIn) {
       history.push("/");

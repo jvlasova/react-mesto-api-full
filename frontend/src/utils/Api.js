@@ -1,6 +1,10 @@
 class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl
+  constructor(optional) {
+    this._baseUrl = optional.baseUrl;
+    this._headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
   }
 
   _handleResponse(res) {
@@ -13,9 +17,7 @@ class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`,{
       method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      headers: this._headers,
       credentials: 'include',
     })
     .then(this._handleResponse);
@@ -24,9 +26,7 @@ class Api {
   setUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      headers: this._headers,
       credentials: 'include',
       body: JSON.stringify({
         name: data.name,
@@ -39,9 +39,7 @@ class Api {
   setUserAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      headers: this._headers,
       credentials: 'include',
       body: JSON.stringify({
         avatar: data.avatar,
@@ -53,9 +51,7 @@ class Api {
   getCardList() {
     return fetch(`${this._baseUrl}/cards`,{
       method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      headers: this._headers,
       credentials: 'include',
     })
     .then(this._handleResponse)
@@ -64,9 +60,8 @@ class Api {
   addCard(data) {
     return fetch(`${this._baseUrl}/cards`,{
       method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -77,10 +72,8 @@ class Api {
 
   changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`,{
-      method: isLiked ? 'DELETE' : 'PUT',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      method: !isLiked ? "PUT" : "DELETE",
+      headers: this._headers,
       credentials: 'include',
     })
     .then(this._handleResponse);
@@ -89,15 +82,15 @@ class Api {
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`,{
       method: 'DELETE',
-      headers: {
-        "Content-Type": "application/json"
-    },
+      headers: this._headers,
       credentials: 'include',
     })
     .then(this._handleResponse);
   }
 }
 
-const api = new Api({ baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru'})
+const api = new Api({
+  baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru',
+})
 
 export default api;

@@ -1,5 +1,4 @@
 const express = require('express');
-require('dotenv').config();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors, celebrate, Joi } = require('celebrate');
@@ -10,7 +9,7 @@ const NotFoundError = require('./errors/not_found_error');
 const { validateUrl } = require('./validation/validation');
 
 const auth = require('./middlewares/auth');
-const { login, createUser, signOut } = require('./controllers/users');
+const { login, createUser } = require('./controllers/users');
 
 const allowedCors = [
   'http://jvlasova.mesto.nomorepartiesxyz.ru',
@@ -19,7 +18,7 @@ const allowedCors = [
   'https://localhost:3000',
 ];
 
-const { PORT = 3001 } = process.env;
+const { PORT = 4000 } = process.env;
 
 const app = express();
 
@@ -45,11 +44,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 
 app.post(
   '/signin',
@@ -78,7 +77,6 @@ app.post(
   createUser,
 );
 
-app.use('/signout', signOut);
 app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));

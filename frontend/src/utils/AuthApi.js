@@ -40,9 +40,9 @@ export const authorize = ({ values }) => {
 
 export const signOut = () => {
   return fetch(`${BASE_URL}/signout`, {
-      method: 'POST',
-      headers,
-      credentials: 'include'
+    method: 'POST',
+    headers,
+    credentials: 'include'
   })
-    .then((res => handleResponse(res)));
+  .then((res => handleResponse(res)));
 }
