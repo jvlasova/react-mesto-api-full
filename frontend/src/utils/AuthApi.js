@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.jvlasova.mesto.nomorepartiesxyz.ru';
+export const BASE_URL = 'https://api.jvlasova.mesto.nomorepartiesxyz.ru';
 
 const headers = {
   'Content-Type': 'application/json'

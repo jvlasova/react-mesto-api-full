@@ -98,6 +98,6 @@ class Api {
   }
 }
 
-const api = new Api({ baseUrl: 'http://api.jvlasova.mesto.nomorepartiesxyz.ru'})
+const api = new Api({ baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru'})
 
 export default api;

@@ -19,7 +19,7 @@ const allowedCors = [
   'https://localhost:3000',
 ];
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 
 const app = express();
 
