@@ -15,11 +15,11 @@ const { login, createUser } = require('./controllers/users');
 const allowedCors = [
   'http://jvlasova.mesto.nomorepartiesxyz.ru',
   'https://jvlasova.mesto.nomorepartiesxyz.ru',
-  'http://localhost:3000',
-  'https://localhost:3000',
+  'http://localhost:3001',
+  'https://localhost:3001',
 ];
 
-const { PORT = 4000 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 

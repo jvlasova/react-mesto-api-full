@@ -87,7 +87,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://jvlasova.mesto.nomorepartiesxyz.ru',
+  baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru',
 })
 
 export default api;
