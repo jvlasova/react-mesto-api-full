@@ -1,10 +1,7 @@
 class Api {
   constructor(optional) {
     this._baseUrl = optional.baseUrl;
-    this._headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
+    this._headers = optional.headers;
   }
 
   _handleResponse(res) {
@@ -90,7 +87,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru',
+  baseUrl: 'https://jvlasova.mesto.nomorepartiesxyz.ru',
 })
 
 export default api;
