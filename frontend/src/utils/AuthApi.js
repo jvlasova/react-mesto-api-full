@@ -1,6 +1,7 @@
 export const BASE_URL = 'https://api.jvlasova.mesto.nomorepartiesxyz.ru';
 
 const headers = {
+  'Accept': 'application/json',
   'Content-Type': 'application/json'
 }
 
@@ -40,10 +41,7 @@ export const authorize = ({ values }) => {
 export const signOut = () => {
   return fetch(`${BASE_URL}/signout`, {
       method: 'POST',
-      headers: {
-          "Content-Type": "application/json"
-      },
-      
+      headers,
       credentials: 'include'
   })
     .then((res => handleResponse(res)));

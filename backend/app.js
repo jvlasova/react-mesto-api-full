@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const { errors, celebrate, Joi } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -12,38 +13,40 @@ const { validateUrl } = require('./validation/validation');
 const auth = require('./middlewares/auth');
 const { login, createUser, signOut } = require('./controllers/users');
 
-const allowedCors = [
-  'http://jvlasova.mesto.nomorepartiesxyz.ru',
-  'https://jvlasova.mesto.nomorepartiesxyz.ru',
-  'http://localhost:3000',
-  'https://localhost:3000',
-];
+// const allowedCors = [
+//   'http://jvlasova.mesto.nomorepartiesxyz.ru',
+//   'https://jvlasova.mesto.nomorepartiesxyz.ru',
+//   'http://localhost:3000',
+//   'https://localhost:3000',
+// ];
 
-const { PORT = 4000 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  const { origin } = req.headers;
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  const { method } = req;
-  const requestHeaders = req.headers['access-control-request-headers'];
+app.use(cors());
 
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    res.end();
-    return;
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Credentials', true);
+//   const { origin } = req.headers;
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//   }
+//   const { method } = req;
+//   const requestHeaders = req.headers['access-control-request-headers'];
+
+//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+//   if (method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+//     res.header('Access-Control-Allow-Headers', requestHeaders);
+//     res.end();
+//     return;
+//   }
+//   next();
+// });
 
 app.get('/crash-test', () => {
   setTimeout(() => {
