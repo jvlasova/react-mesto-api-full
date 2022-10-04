@@ -88,7 +88,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'secret',
+        NODE_ENV === 'production' ? JWT_SECRET : 'SECRET',
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
@@ -96,15 +96,15 @@ const login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       })
-        .send({ token })
-        .end();
+        .send({ token });
     })
     .catch(next);
 };
 
 const signOut = (req, res, next) => {
   res.clearCookie('jwt', {
-    sameSite: true,
+    sameSite: 'none',
+    secure: true,
   })
     .send({ message: 'Cookies удалены' })
     .end();

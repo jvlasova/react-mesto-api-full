@@ -9,9 +9,9 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'secret');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'SECRET');
   } catch (e) {
-    const err = new AuthError('Необходима авторизация');
+    const err = new AuthError('Отсутствует токен');
     next(err);
   }
 

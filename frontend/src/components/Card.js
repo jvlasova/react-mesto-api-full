@@ -7,7 +7,7 @@ function Card(props) {
   const cardDeleteButtonClassName = `element__trash ${
     isOwn && "element__trash_active"
   }`;
-  const isLiked = props.card.likes.some((i) => i === currentUser._id);
+  const isLiked = props.card.likes.some((like) => like === currentUser._id);
   const cardLikeButtonClassName = `element__like ${
     isLiked && "element__like_active"
   }`;
