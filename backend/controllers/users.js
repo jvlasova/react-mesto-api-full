@@ -94,7 +94,8 @@ const login = (req, res, next) => {
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: true,
+        sameSite: 'none',
+        secure: true,
       })
         .send({ token });
     })
@@ -103,7 +104,8 @@ const login = (req, res, next) => {
 
 const signOut = (req, res, next) => {
   res.clearCookie('jwt', {
-    sameSite: true,
+    sameSite: 'none',
+    secure: true,
   })
     .send({ message: 'Cookies удалены' });
   next();

@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.jvlasova.mesto.nomorepartiesxyz.ru';
+export const BASE_URL = 'http://localhost:3000';
 
 const headers = {
   'Accept': 'application/json',
