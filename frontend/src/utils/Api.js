@@ -107,7 +107,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru',
 })
 
 export default api;
