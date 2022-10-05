@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.jvlasova.mesto.nomorepartiesxyz.ru';
+export const BASE_URL = 'http://localhost:3000';
 
 const headers = {
   'Accept': 'application/json',
@@ -34,6 +34,23 @@ export const authorize = ({ values }) => {
       email: values.login,
       password: values.password
     })
+  })
+  .then((res => handleResponse(res)));
+}
+
+export const getContent = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    headers,
+    credentials: 'include',
+  })
+  .then((res => handleResponse(res)));
+}
+
+export const signOut = () => {
+  return fetch(`${BASE_URL}/signout`, {
+      method: 'POST',
+      headers,
+      credentials: 'include'
   })
   .then((res => handleResponse(res)));
 }

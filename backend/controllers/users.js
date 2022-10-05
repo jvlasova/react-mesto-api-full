@@ -101,6 +101,14 @@ const login = (req, res, next) => {
     .catch(next);
 };
 
+const signOut = (req, res, next) => {
+  res.clearCookie('jwt', {
+    sameSite: true,
+  })
+    .send({ message: 'Cookies удалены' });
+  next();
+};
+
 const updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
@@ -164,6 +172,7 @@ module.exports = {
   getMe,
   createUser,
   login,
+  signOut,
   getUsersById,
   updateUserInfo,
   updateAvatar,

@@ -89,6 +89,22 @@ function App() {
     setSelectedCard({ name: "", link: "" });
   }
 
+  function getInfo() {
+    AuthApi.getContent()
+      .then((data) => {
+        setEmail(data.email);
+        setLoggedIn(true);
+        //history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  React.useEffect(() => {
+    getInfo();
+  }, []);
+
   React.useEffect(() => {
     if (loggedIn) {
       history.push("/");
@@ -115,7 +131,7 @@ function App() {
       .then((res) => {
         if (res) {
           handleInfoTooltipOpen(true);
-          history.push("/");
+          history.push("/sign-in");
         }
       })
       .catch((err) => {
@@ -125,7 +141,15 @@ function App() {
   }
 
   function handleSignOut() {
-    history.push("/sign-in");
+    AuthApi.signOut () 
+      .then(() => {
+        setCurrentUser({});
+        setLoggedIn(false);
+        history.push("/sign-in");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleCardLike(card) {

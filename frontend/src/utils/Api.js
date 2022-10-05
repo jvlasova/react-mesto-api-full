@@ -1,7 +1,10 @@
 class Api {
   constructor(optional) {
     this._baseUrl = optional.baseUrl;
-    this._headers = optional.headers;
+    this._headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
   }
 
   _handleResponse(res) {
@@ -87,7 +90,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.jvlasova.mesto.nomorepartiesxyz.ru',
+  baseUrl: 'http://localhost:3000',
 })
 
 export default api;
